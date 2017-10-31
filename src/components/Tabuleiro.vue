@@ -24,7 +24,9 @@ export default {
       nome: 'Goku',
       cards: [],
       flipeds: {itens: [], total: 0},
-      flipping: false
+      flipping: false,
+      acertos: 0,
+      erros: 0
     }
   },
   methods: {
@@ -32,7 +34,8 @@ export default {
       var cartaJogo = carta
       var me = this
       var flipeds = me.flipeds
-      if (!me.flipping) {
+      var clicouMesmaCarta = !!flipeds.itens[0] && flipeds.itens[0].id === cartaJogo.id
+      if (!me.flipping && !clicouMesmaCarta) {
         cartaJogo.clicked = true
         if (flipeds.total === 0) {
           flipeds.total = flipeds.total + 1
@@ -67,9 +70,59 @@ export default {
         { id: 9, numero: '04', clicked: false },
         { id: 10, numero: '05', clicked: false }]
       } else if (this.nivel === 'medium') {
-        listaInicial = [{ numero: '01', clicked: false }, { numero: '02', clicked: false }, { numero: '03', clicked: false }, { numero: '04', clicked: false }, { numero: '05', clicked: false }, { numero: '06', clicked: false }, { numero: '07', clicked: false }, { numero: '08', clicked: false }, { numero: '09', clicked: false }, { numero: '10', clicked: false }]
+        listaInicial = [
+        { id: 1, numero: '01', clicked: false },
+        { id: 2, numero: '02', clicked: false },
+        { id: 3, numero: '03', clicked: false },
+        { id: 4, numero: '04', clicked: false },
+        { id: 5, numero: '05', clicked: false },
+        { id: 6, numero: '06', clicked: false },
+        { id: 7, numero: '07', clicked: false },
+        { id: 8, numero: '08', clicked: false },
+        { id: 9, numero: '09', clicked: false },
+        { id: 10, numero: '10', clicked: false },
+        { id: 11, numero: '01', clicked: false },
+        { id: 12, numero: '02', clicked: false },
+        { id: 13, numero: '03', clicked: false },
+        { id: 14, numero: '04', clicked: false },
+        { id: 15, numero: '05', clicked: false },
+        { id: 16, numero: '06', clicked: false },
+        { id: 17, numero: '07', clicked: false },
+        { id: 18, numero: '08', clicked: false },
+        { id: 19, numero: '09', clicked: false },
+        { id: 20, numero: '10', clicked: false }]
       } else {
-        listaInicial = [{ numero: '01', clicked: false }, { numero: '02', clicked: false }, { numero: '03', clicked: false }, { numero: '04', clicked: false }, { numero: '05', clicked: false }, { numero: '06', clicked: false }, { numero: '07', clicked: false }, { numero: '08', clicked: false }, { numero: '09', clicked: false }, { numero: '10', clicked: false }, { numero: '11', clicked: false }, { numero: '12', clicked: false }, { numero: '13', clicked: false }, { numero: '14', clicked: false }, { numero: '15', clicked: false }]
+        listaInicial = [
+        { id: 1, numero: '01', clicked: false },
+        { id: 2, numero: '02', clicked: false },
+        { id: 3, numero: '03', clicked: false },
+        { id: 4, numero: '04', clicked: false },
+        { id: 5, numero: '05', clicked: false },
+        { id: 6, numero: '06', clicked: false },
+        { id: 7, numero: '07', clicked: false },
+        { id: 8, numero: '08', clicked: false },
+        { id: 9, numero: '09', clicked: false },
+        { id: 10, numero: '10', clicked: false },
+        { id: 11, numero: '11', clicked: false },
+        { id: 12, numero: '12', clicked: false },
+        { id: 13, numero: '13', clicked: false },
+        { id: 14, numero: '14', clicked: false },
+        { id: 15, numero: '15', clicked: false },
+        { id: 16, numero: '01', clicked: false },
+        { id: 17, numero: '02', clicked: false },
+        { id: 18, numero: '03', clicked: false },
+        { id: 19, numero: '04', clicked: false },
+        { id: 20, numero: '05', clicked: false },
+        { id: 21, numero: '06', clicked: false },
+        { id: 22, numero: '07', clicked: false },
+        { id: 23, numero: '08', clicked: false },
+        { id: 24, numero: '09', clicked: false },
+        { id: 25, numero: '10', clicked: false },
+        { id: 26, numero: '11', clicked: false },
+        { id: 27, numero: '12', clicked: false },
+        { id: 28, numero: '13', clicked: false },
+        { id: 29, numero: '14', clicked: false },
+        { id: 30, numero: '15', clicked: false }]
       }
 
       var listaFinal = listaInicial.sort(function () { var aleatorio = Math.random(); return aleatorio > Math.random() })
