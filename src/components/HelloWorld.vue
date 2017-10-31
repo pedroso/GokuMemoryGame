@@ -22,7 +22,7 @@
       </div>
 
       <div class="container-form">
-        <button>Que os Jogos comecem !</button>
+        <button v-on:click="">Recomeçar Jogo!</button>
       </div>
 
       <div v-if="nivel == 'easy'">

@@ -6,7 +6,7 @@
 		    <carta :numero="carta.numero" :clicked="carta.clicked"></carta>
       </div>
     </div>
-
+    <p>Tentativas: {{acertos + erros}} - Erros: {{erros}} - Acertos: {{acertos}}</p>
 	</div>
 </template>
 
@@ -35,20 +35,28 @@ export default {
       var me = this
       var flipeds = me.flipeds
       var clicouMesmaCarta = !!flipeds.itens[0] && flipeds.itens[0].id === cartaJogo.id
-      if (!me.flipping && !clicouMesmaCarta) {
+      if (!me.flipping && !clicouMesmaCarta && !cartaJogo.clicked) {
         cartaJogo.clicked = true
         if (flipeds.total === 0) {
           flipeds.total = flipeds.total + 1
           flipeds.itens.push(carta)
         } else {
           me.flipping = true
-          setTimeout(function () {
-            flipeds.itens[0].clicked = false
-            cartaJogo.clicked = false
+          if (flipeds.itens[0].numero === cartaJogo.numero) {
             flipeds.total = 0
             flipeds.itens = []
             me.flipping = false
-          }, 2000)
+            me.acertos = me.acertos + 1
+          } else {
+            me.erros = me.erros + 1
+            setTimeout(function () {
+              flipeds.itens[0].clicked = false
+              cartaJogo.clicked = false
+              flipeds.total = 0
+              flipeds.itens = []
+              me.flipping = false
+            }, 2000)
+          }
         }
       }
     }
@@ -56,7 +64,8 @@ export default {
   computed: {
     listaCartas: function () {
       var listaInicial = []
-
+      this.acertos = 0
+      this.erros = 0
       if (this.nivel === 'easy') {
         listaInicial = [
         { id: 1, numero: '03', clicked: false },
