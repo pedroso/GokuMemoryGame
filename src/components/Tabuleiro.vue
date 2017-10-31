@@ -26,7 +26,8 @@ export default {
       flipeds: {itens: [], total: 0},
       flipping: false,
       acertos: 0,
-      erros: 0
+      erros: 0,
+      ranking: []
     }
   },
   methods: {
@@ -47,6 +48,15 @@ export default {
             flipeds.itens = []
             me.flipping = false
             me.acertos = me.acertos + 1
+            if (me.acertos === (me.cards.length / 2)) {
+              setTimeout(function () {
+                var resposta = confirm('Parabéns Guerreiro! Deseja jogar novamente?')
+                if (resposta) {
+                  me.resetCards()
+                  console.log(me)
+                }
+              }, 1000)
+            }
           } else {
             me.erros = me.erros + 1
             setTimeout(function () {
@@ -59,10 +69,9 @@ export default {
           }
         }
       }
-    }
-  },
-  computed: {
-    listaCartas: function () {
+    },
+    resetCards: function () {
+      this.cards = []
       var listaInicial = []
       this.acertos = 0
       this.erros = 0
@@ -137,6 +146,11 @@ export default {
       var listaFinal = listaInicial.sort(function () { var aleatorio = Math.random(); return aleatorio > Math.random() })
       this.cards = listaFinal
       return listaFinal
+    }
+  },
+  computed: {
+    listaCartas: function () {
+      return this.resetCards()
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="hello" style="width: 100%;">
     <h1>{{ msg }}</h1>
-    <h2>Antes de começar, me diga seu nome!</h2>
+    <h2>Antes de começar, digite seu nome!</h2>
     <div class="container-form">
       <label>Nome:</label>
       <input type="text" name="nome" v-model="nome" />
@@ -22,7 +22,7 @@
       </div>
 
       <div class="container-form">
-        <button v-on:click="">Recomeçar Jogo!</button>
+        <button @click="">Recomeçar Jogo!</button>
       </div>
 
       <div v-if="nivel == 'easy'">
@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       msg: 'Olá, eu sou o Goku!',
-      nome: 'Felipe',
+      nome: '',
       nivel: 'easy'
     }
   }
