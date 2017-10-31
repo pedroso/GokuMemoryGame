@@ -1,13 +1,11 @@
 <template>
-	<div class="flip-container isLink" v-on:click="flipCard"  >
-		<div class="flipper" :class="{flippered: this.clicked}">
-			<div class="front">
-	      		
-		    </div>
-		    <div class="back">
-				<div class="carta">
-					<img :src="imagePath()" />
-				</div>
+	<div>
+		<div class="front">
+	  		
+	    </div>
+	    <div class="back">
+			<div class="carta">
+				<img :src="imagePath()" />
 			</div>
 		</div>
 	</div>
@@ -20,14 +18,6 @@ export default {
   methods: {
     imagePath: function () {
       return require('../assets/img/' + this.numero + '.png')
-    },
-    flipCard () {
-      var me = this
-      me.clicked = true
-
-      window.setTimeout(function () {
-        me.clicked = false
-      }, 2000)
     }
   },
   data () {
