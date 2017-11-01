@@ -74,7 +74,8 @@ export default {
             me.acertos = me.acertos + 1
             if (me.acertos === (me.cards.length / 2)) {
               setTimeout(function () {
-                var resposta = confirm('Parabéns Guerreiro! Deseja jogar novamente?')
+                var tentativas = (me.acertos + me.erros)
+                var resposta = confirm('Parabéns Guerreiro, ganhou em ' + tentativas + ' tentativas! Deseja jogar novamente?')
                 me.rankearGuerreiro()
                 if (resposta) {
                   me.resetCards()
