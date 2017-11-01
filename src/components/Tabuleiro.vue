@@ -10,15 +10,25 @@
       </div>
     </div>
     <p>Tentativas: {{acertos + erros}} - Erros: {{erros}} - Acertos: {{acertos}}</p>
+
+    <div class="container-form">
+      <h1>Ranking dos Guerreiros</h1>
+      <div v-for="item in ranking">
+        Nome: {{ item.nome }}<br/>
+        Tentativas: {{ item.tentativas }}
+      </div>
+      <button @click="zerarRanking()">Zerar Ranking !</button>
+    </div>
 	</div>
 </template>
 
 <script>
 import db1Carta from './Carta'
+import Vue from 'vue'
 
 export default {
   name: 'tabuleiro',
-  props: ['nivel'],
+  props: ['nivel', 'nome'],
   watch: {
     nivel: function (newVal, oldVal) {
       this.resetCards()
@@ -29,10 +39,10 @@ export default {
   },
   created: function () {
     this.resetCards()
+    this.ranking = Vue.ls.get('ranking', [])
   },
   data () {
     return {
-      nome: 'Goku',
       cards: [],
       flipeds: {itens: [], total: 0},
       flipping: false,
@@ -62,6 +72,7 @@ export default {
             if (me.acertos === (me.cards.length / 2)) {
               setTimeout(function () {
                 var resposta = confirm('Parabéns Guerreiro! Deseja jogar novamente?')
+                me.rankearGuerreiro()
                 if (resposta) {
                   me.resetCards()
                 }
@@ -156,10 +167,32 @@ export default {
 
       var listaFinal = listaInicial.sort(function () { var aleatorio = Math.random(); return aleatorio > Math.random() })
       this.cards = listaFinal
+      this.desvirarCartas(listaFinal)
       this.listaCartas = listaFinal
 
       this.flipping = false
       return listaFinal
+    },
+    desvirarCartas: function (arrayCartas) {
+      for (var i = arrayCartas.length - 1; i >= 0; i--) {
+        arrayCartas[i].click = false
+      }
+    },
+    rankearGuerreiro: function () {
+      var ranking = Vue.ls.get('ranking', [])
+
+      var tentativas = this.acertos + this.erros
+
+      ranking.push({nome: this.nome, tentativas: tentativas})
+
+      ranking.sort(function (a, b) { console.log('argumentos'); console.log(arguments); return a.tentativas > b.tentativas })
+
+      Vue.ls.set('ranking', ranking)
+      this.ranking = Vue.ls.get('ranking', [])
+    },
+    zerarRanking: function () {
+      Vue.ls.set('ranking', [])
+      this.ranking = Vue.ls.get('ranking', [])
     }
   },
   computed: {

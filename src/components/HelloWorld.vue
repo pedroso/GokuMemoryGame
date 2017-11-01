@@ -1,7 +1,7 @@
 <template>
   <div class="hello" style="width: 100%;">
     <h1>{{ msg }}</h1>
-    <h2>Antes de começar, digite seu nome!</h2>
+    <h2>Antes de começar o desafio, digite seu nome!</h2>
     <div class="container-form">
       <label>Nome:</label>
       <input type="text" name="nome" v-model="nome" />
@@ -21,7 +21,7 @@
         <h3>Sayajin nível {{fraseDoNivel()}}</h3>
       </div>
 
-      <tabuleiro :nivel="nivel"></tabuleiro>
+      <tabuleiro :nivel="nivel" :nome="nome"></tabuleiro>
     </div>
   </div>
 </template>
@@ -41,7 +41,7 @@ export default {
   },
   data () {
     return {
-      msg: 'Olá, eu sou o Goku!',
+      msg: 'Olá guerreiro sayajin, eu sou o Goku!',
       nome: '',
       nivel: 'easy',
       oldNivel: ''
