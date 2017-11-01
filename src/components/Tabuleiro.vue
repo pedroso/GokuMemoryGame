@@ -1,7 +1,7 @@
 <template>
 	<div style="padding: 5px; width: 700px; margin: 0 auto;">
     <div class="container-form">
-      <button @click="resetCards()">Recomeçar Jogo!</button>
+      <button @click="resetCards()" class="btn btn-default">Recomeçar Jogo!</button>
     </div>
 
     <div v-for="carta in listaCartas" class="flip-container isLink" v-on:click="flipCard(carta)">
@@ -13,11 +13,13 @@
 
     <div class="container-form">
       <h1>Ranking dos Guerreiros</h1>
-      <div v-for="item in ranking">
-        Nome: {{ item.nome }}<br/>
-        Tentativas: {{ item.tentativas }}
-      </div>
-      <button @click="zerarRanking()">Zerar Ranking !</button>
+      <ul class="list-group" style="margin: 5px;">
+        <li class="list-group-item" v-for="(item, index) in ranking">
+          {{ index + 1 }} - <strong>Nome:</strong> {{ item.nome }} - <strong>Tentativas:</strong> {{ item.tentativas }}
+        </li>
+      </ul>
+
+      <input type="button" @click="zerarRanking()" class="btn btn-warning" value="Zerar Ranking !" />
     </div>
 	</div>
 </template>
@@ -32,6 +34,7 @@ export default {
   watch: {
     nivel: function (newVal, oldVal) {
       this.resetCards()
+      this.setRanking()
     }
   },
   components: {
@@ -39,7 +42,7 @@ export default {
   },
   created: function () {
     this.resetCards()
-    this.ranking = Vue.ls.get('ranking', [])
+    this.setRanking()
   },
   data () {
     return {
@@ -183,16 +186,28 @@ export default {
 
       var tentativas = this.acertos + this.erros
 
-      ranking.push({nome: this.nome, tentativas: tentativas})
+      ranking.push({nome: this.nome, tentativas: tentativas, nivel: this.nivel})
 
       ranking.sort(function (a, b) { console.log('argumentos'); console.log(arguments); return a.tentativas > b.tentativas })
 
       Vue.ls.set('ranking', ranking)
-      this.ranking = Vue.ls.get('ranking', [])
+      this.setRanking()
     },
     zerarRanking: function () {
       Vue.ls.set('ranking', [])
       this.ranking = Vue.ls.get('ranking', [])
+    },
+    setRanking: function () {
+      var me = this
+      var rankingNovo = Vue.ls.get('ranking', [])
+      console.log(rankingNovo)
+      rankingNovo = rankingNovo.filter(function (item) {
+        return item.nivel === me.nivel
+      })
+      console.log(rankingNovo)
+      this.ranking = rankingNovo.filter(function (item) {
+        return item.nivel === me.nivel
+      })
     }
   },
   computed: {

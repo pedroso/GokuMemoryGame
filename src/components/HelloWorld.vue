@@ -1,7 +1,13 @@
 <template>
   <div class="hello" style="width: 100%;">
-    <h1>{{ msg }}</h1>
-    <h2>Antes de começar o desafio, digite seu nome!</h2>
+
+    <div class="jumbotron">
+      <div class="container">
+        <img src="../assets/img/back-goku.gif" width="250" style="border-radius: 10px 40px;border: 3px solid #444;" />
+        <h1>{{ msg }}</h1>
+        <h2>Antes de começar o desafio, digite seu nome!</h2>
+      </div>
+    </div>
     <div class="container-form">
       <label>Nome:</label>
       <input type="text" name="nome" v-model="nome" />
@@ -18,8 +24,10 @@
 
         <input type="radio" id="hard" name="level" value="hard" v-show="false" v-model="nivel"/>
         <label for="hard"><img src="../assets/img/nivel3.png" width="100" height="100" v-bind:class="{ isLink: true, selected: nivel == 'hard', unselected: nivel != 'hard' }" /></label>
-        <h3>Sayajin nível {{fraseDoNivel()}}</h3>
+        
       </div>
+      
+      <h3>Sayajin nível {{fraseDoNivel()}}</h3>
 
       <tabuleiro :nivel="nivel" :nome="nome"></tabuleiro>
     </div>
