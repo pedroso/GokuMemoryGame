@@ -1,5 +1,8 @@
 <template>
 	<div style="padding: 5px; width: 700px; margin: 0 auto;">
+    <div class="container-form">
+      <button @click="resetCards()">Recomeçar Jogo!</button>
+    </div>
 
     <div v-for="carta in listaCartas" class="flip-container isLink" v-on:click="flipCard(carta)">
       <div class="flipper" :class="{flippered: carta.clicked}">
@@ -16,8 +19,16 @@ import db1Carta from './Carta'
 export default {
   name: 'tabuleiro',
   props: ['nivel'],
+  watch: {
+    nivel: function (newVal, oldVal) {
+      this.resetCards()
+    }
+  },
   components: {
     'carta': db1Carta
+  },
+  created: function () {
+    this.resetCards()
   },
   data () {
     return {
@@ -53,7 +64,6 @@ export default {
                 var resposta = confirm('Parabéns Guerreiro! Deseja jogar novamente?')
                 if (resposta) {
                   me.resetCards()
-                  console.log(me)
                 }
               }, 1000)
             }
@@ -72,6 +82,7 @@ export default {
     },
     resetCards: function () {
       this.cards = []
+      this.flipping = true
       var listaInicial = []
       this.acertos = 0
       this.erros = 0
@@ -145,12 +156,22 @@ export default {
 
       var listaFinal = listaInicial.sort(function () { var aleatorio = Math.random(); return aleatorio > Math.random() })
       this.cards = listaFinal
+      this.listaCartas = listaFinal
+
+      this.flipping = false
       return listaFinal
     }
   },
   computed: {
-    listaCartas: function () {
-      return this.resetCards()
+    listaCartas: {
+      // getter
+      get: function () {
+        return this.cards
+      },
+      // setter
+      set: function (listaCards) {
+        this.cards = listaCards
+      }
     }
   }
 }
@@ -231,6 +252,11 @@ export default {
   transform: rotateY(180deg);
 
   background: #f8f8f8;
+}
+
+.container-form {
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 </style>

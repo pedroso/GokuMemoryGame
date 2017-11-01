@@ -21,20 +21,7 @@
         <h3>Sayajin nível {{fraseDoNivel()}}</h3>
       </div>
 
-      <div class="container-form">
-        <button @click="">Recomeçar Jogo!</button>
-      </div>
-
-      <div v-if="nivel == 'easy'">
-        <tabuleiro nivel="easy"></tabuleiro>
-      </div>
-      <div v-else-if="nivel == 'medium'">
-        <tabuleiro nivel="medium"></tabuleiro>
-      </div>
-      <div v-else-if="nivel == 'hard'">
-        <tabuleiro nivel="hard"></tabuleiro>
-      </div>
-
+      <tabuleiro :nivel="nivel"></tabuleiro>
     </div>
   </div>
 </template>
@@ -56,7 +43,8 @@ export default {
     return {
       msg: 'Olá, eu sou o Goku!',
       nome: '',
-      nivel: 'easy'
+      nivel: 'easy',
+      oldNivel: ''
     }
   }
 }
